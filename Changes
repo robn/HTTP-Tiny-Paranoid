@@ -1,4 +1,5 @@
 {{$NEXT}}
+          Declare dependency on HTTP::Tiny
           Doc fixes
 
 0.02      Jun 03 2014
