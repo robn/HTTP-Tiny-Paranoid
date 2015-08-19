@@ -19,10 +19,11 @@ around _open_handle => sub {
     my $self = shift;
 
     my ($req, $scheme, $host, $port) = @_;
-    my (undef, $error) = $dns->resolve($host);
+    my ($ips, $error) = $dns->resolve($host);
     die "$host: $error\n" if defined $error;
+    die "$host: no IP address found\n" unless @$ips;
 
-    $self->$next(@_);
+    $self->$next($req, $scheme, $ips->[0], $port);
 };
 
 1;
