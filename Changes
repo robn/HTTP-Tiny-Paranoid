@@ -1,4 +1,6 @@
 {{$NEXT}}
+
+0.05      Nov 01 2016
 - Require latest HTTP::Tiny to get overridable peer IP
 - Pass through resolved IP via overridable peer IP
 
