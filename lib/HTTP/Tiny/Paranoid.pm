@@ -5,6 +5,7 @@ use warnings;
 
 # ABSTRACT: A safer HTTP::Tiny
 
+use HTTP::Tiny 0.070;
 use parent 'HTTP::Tiny';
 use Net::DNS::Paranoid;
 use Class::Method::Modifiers;
@@ -15,15 +16,20 @@ sub blocked_hosts { shift; $dns->blocked_hosts(@_) }
 sub whitelisted_hosts { shift; $dns->whitelisted_hosts(@_) }
 
 around _open_handle => sub {
-    my $next = shift;
-    my $self = shift;
+  my $next = shift;
+  my $self = shift;
 
-    my ($req, $scheme, $host, $port) = @_;
+  my ($req, $scheme, $host, $port, $peer) = @_;
+
+  if ($peer && $peer eq $host) {
+    $self->$next($req, $scheme, $host, $port, $peer);
+  }
+  else {
     my ($ips, $error) = $dns->resolve($host);
     die "$host: $error\n" if defined $error;
     die "$host: no IP address found\n" unless @$ips;
-
-    $self->$next($req, $scheme, $ips->[0], $port);
+    $self->$next($req, $scheme, $host, $port, $ips->[0]);
+  }
 };
 
 1;

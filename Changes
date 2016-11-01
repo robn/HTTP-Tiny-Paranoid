@@ -1,4 +1,6 @@
 {{$NEXT}}
+- Require latest HTTP::Tiny to get overridable peer IP
+- Pass through resolved IP via overridable peer IP
 
 0.04      Sep 29 2015
           Protect against DNS rebind attacks
