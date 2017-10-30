@@ -1,5 +1,8 @@
 {{$NEXT}}
 
+0.06      Oct 30 2017
+- Always check the peer IP address
+
 0.05      Nov 01 2016
 - Require latest HTTP::Tiny to get overridable peer IP
 - Pass through resolved IP via overridable peer IP
