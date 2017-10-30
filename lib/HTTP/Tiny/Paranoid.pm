@@ -21,7 +21,10 @@ around _open_handle => sub {
 
   my ($req, $scheme, $host, $port, $peer) = @_;
 
-  if ($peer && $peer eq $host) {
+  if ($peer) {
+    my ($ips, $error) = $dns->resolve($peer);
+    die "$peer: $error\n" if defined $error;
+    die "$peer: did not match resolved IP\n" unless @$ips && $ips->[0] eq $peer;
     $self->$next($req, $scheme, $host, $port, $peer);
   }
   else {
