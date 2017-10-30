@@ -1,4 +1,5 @@
 {{$NEXT}}
+- Don't require peer address to match resolved address
 
 0.06      Oct 30 2017
 - Always check the peer IP address
